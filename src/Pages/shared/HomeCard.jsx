@@ -1,5 +1,5 @@
 const HomeCard = ({ item }) => {
-  const { image, name, recipe } = item;
+  const { image, name, recipe ,price } = item;
   return (
     <div>
       <div className=" bg-white w-96 hover:bg-slate-100 shadow-md">
@@ -9,7 +9,10 @@ const HomeCard = ({ item }) => {
             alt="Shoes"
             className=" rounded-md"
           />
+                  <p className= " flex flex-row mt-4 text-center  rounded bg-red-400 w-fit">${price}</p>
+ 
         </figure>
+
         <div className="card-body items-center text-center">
           <h2 className="card-title">{name}</h2>
           <p>{recipe}</p>

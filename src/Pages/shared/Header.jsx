@@ -4,6 +4,7 @@ const Header = () => {
   const navitem = <>
     <li className=" uppercase"><Link to={'/'} >Home</Link></li>
     <li className=" uppercase"><Link to={'/menu'} >our menu</Link></li>
+    <li className=" uppercase"><Link to={'order/salad'} >our order</Link></li>
   </>
   return (
     <>
