@@ -10,7 +10,7 @@ const Cover = ({ img, title }) => {
       maxTransition={90}
     >
       <div
-        className="hero min-h-[42rem]"
+        className="hero min-h-[42rem] my-10"
         style={{
           backgroundImage: `url(${img})`,
         }}
