@@ -1,6 +1,6 @@
 import SimpleParallax from "simple-parallax-js";
 
-const Cover = ({ img, title }) => {
+const Cover = ({ img, title , dis }) => {
   return (
     <SimpleParallax
       delay={0.4}
@@ -20,9 +20,7 @@ const Cover = ({ img, title }) => {
           <div className="max-w-md">
             <h1 className="mb-5 text-5xl font-bold uppercase">{title}</h1>
             <p className="mb-5">
-              Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda
-              excepturi exercitationem quasi. In deleniti eaque aut repudiandae
-              et a id nisi.
+              {dis}
             </p>
           </div>
         </div>

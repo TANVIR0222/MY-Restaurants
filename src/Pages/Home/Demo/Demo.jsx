@@ -1,14 +1,12 @@
-import { useEffect, useState } from "react";
 import HomeCard from "../../shared/HomeCard";
 import SectionTitel from "../../../components/SectionTitel";
+import useMenu from "../../../Hooks/useMenu";
 
 const Demo = () => {
-  const [demo, setDemo] = useState([]);
-  useEffect(() => {
-    fetch("demo.json")
-      .then((res) => res.json())
-      .then((data) => setDemo(data));
-  }, []);
+
+
+  const [menu] = useMenu();
+  const demo = menu.filter((item) => item.category === 'demo')
   return (
     <div>
       <section>

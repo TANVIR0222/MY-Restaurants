@@ -13,7 +13,6 @@ const Home = () => {
       <Category/>
       <PopularMenu/>
       <Demo/>
-
       <Featured/>
       <Testimonials/>
     </div>

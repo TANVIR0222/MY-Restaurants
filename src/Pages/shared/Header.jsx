@@ -5,6 +5,7 @@ const Header = () => {
     <li className=" uppercase"><Link to={'/'} >Home</Link></li>
     <li className=" uppercase"><Link to={'/menu'} >our menu</Link></li>
     <li className=" uppercase"><Link to={'order/salad'} >our order</Link></li>
+    <li className=" uppercase"><Link to={'/contact'} >Contact</Link></li>
   </>
   return (
     <>

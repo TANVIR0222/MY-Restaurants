@@ -6,7 +6,8 @@ import Tab from "@mui/material/Tab";
 import HomeCard from "../../shared/HomeCard";
 import PaginationCard from "../pagination/PaginationCard";
 import { useParams } from "react-router-dom";
-const OrderMenu = () => {
+const 
+OrderMenu = () => {
 
   const categorise = ['salad' , 'pizza' , 'soup' , 'dessert' , 'drinks' ]
   const {category} = useParams();
