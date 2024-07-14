@@ -1,14 +1,33 @@
+import { useContext } from "react";
 import { Link } from "react-router-dom";
+import { AuthContex } from "../../Providers/AuthProviders";
+import { Button } from "@mui/material";
 
+// 
 
 const Header = () => {
+  const {user,logOut} = useContext(AuthContex)
+  const handleLogout = () =>{
+    logOut()
+    .then(()=>{})
+    .catch(error => console.log(error))
+  }
   const navitem = <>
     <li className=" uppercase"><Link to={'/'} >Home</Link></li>
     <li className=" uppercase"><Link to={'/menu'} >our menu</Link></li>
     <li className=" uppercase"><Link to={'order/salad'} >our order</Link></li>
     <li className=" uppercase"><Link to={'/contact'} >Contact</Link></li>
-    <li className=" uppercase"><Link to={'/login'} >Login</Link></li>
+    <li className=" uppercase"><Link to={'/secret'} >Secret</Link></li>
 
+  {
+    user ? <>
+    <Button onClick={handleLogout} variant="contained">Logout</Button>
+
+    </> : <>
+        <li className=" bg-blue-600 rounded justify-end uppercase"><Link to={'/login'} >Login</Link></li>
+
+    </>
+  }
 
   </>
   return (

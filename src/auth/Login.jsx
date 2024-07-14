@@ -6,9 +6,17 @@ import {
 import { useContext, useEffect, useRef, useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { AuthContex } from "../Providers/AuthProviders";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
+import Swal from "sweetalert2";
+// import Swal from "sweetalert2";
 const Login = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  // user jekhane caiche oi khane jabe ta na hole home page a jave
+  const from = location.state?.from?.pathname || "/";
+
   // capcha
   const capchaRef = useRef(null);
   const [email, setEmail] = useState("");
@@ -27,11 +35,22 @@ const Login = () => {
     }
   };
 
+
+
   const handleLogin = (ev) => {
     ev.preventDefault();
-    singIn(email, password).then((result) => {
+    singIn(email, password)
+    .then((result) => {
       const user = result.user;
       console.log(user);
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Login success full",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      navigate(from, { replace: true });
     });
   };
 
