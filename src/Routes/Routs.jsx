@@ -7,6 +7,8 @@ import Main from "../Layout/Main";
 import Menu from "../Pages/Menu/Menu";
 import Order from "../Pages/Order/order/Order";
 import Contact from "../Pages/Contact/Contact";
+import Login from "../auth/Login";
+import SingUp from "../auth/SingUp";
 
   export const router = createBrowserRouter([
     {
@@ -29,6 +31,15 @@ import Contact from "../Pages/Contact/Contact";
             path:'contact',
             element:<Contact/>
         },
+        {
+            path:'login',
+            element:<Login/>
+        },
+        {
+            path:'singup',
+            element:<SingUp/>
+        },
+
       ]
     },
   ]);

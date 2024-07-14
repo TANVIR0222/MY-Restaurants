@@ -1,115 +1,106 @@
-import {  useContext, useEffect, useState } from "react";
+import {  useContext, } from "react";
 import { Helmet } from "react-helmet-async";
 import { useForm, } from "react-hook-form";
-import { FcGoogle } from "react-icons/fc";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContex } from "../Providers/AuthProviders";
+import Swal from "sweetalert2";
 
 const SingUp = () => {
-    const {createUser} = useContext(AuthContex)
+    const {createUser,userProfile} = useContext(AuthContex)
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
-    formState: { isSubmitSuccessful },
   } = useForm();
 
-  const onSubmit = (data) => {
-    console.log(data);
-  };
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    if(isSubmitSuccessful){
-        reset()
-    }
-  }, [isSubmitSuccessful, reset]);
+    const onSubmit = data => {
+        console.log(data);
+        createUser(data.email, data.password)
+            .then(result => {
+                const loggedUser = result.user;
+                console.log(loggedUser);
+                userProfile(data.name, data.photoURL)
+                    .then(() => {
+                        console.log('user profile info updated')
+                        reset();
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'success',
+                            title: 'User created successfully.',
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                        navigate('/');
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const handleSingup =(ev)=>{
-    ev.preventDefault()
-    createUser(email,password)
-    .then(result =>console.log(result.user))
-  }
+                    })
+                    .catch(error => console.log(error))
+            })
+    };
 
   return (
     <>
     <Helmet>
-        <title>SingUp</title>
+        <title>Bistro Boss | Sign Up</title>
     </Helmet>
-    <div className="text-center flex items-center  justify-center my-40">
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col w-3/4  border-2 border-black p-6 md:w-1/3 gap-4"
-        onClick={handleSingup}
-      >
-        <input
-          className=" h-10 bg-gray-300 rounded"
-          type="taxt"
-          name="name"
-          {...register("name", { required: true, maxLength: 20 })}
-          placeholder="Enter yor Name"
-        />
-        {errors.name && (
-          <span className="text-red-800">This field is required</span>
-        )}
-
-        <input
-          className=" h-10 bg-gray-300 rounded"
-          type="email"
-          placeholder="Enter yor Email"
-          {...register("email", { required: true })}
-          value={email}
-          onChange={(ev) => setEmail(ev.target.value)}
-        />
-        {errors.email && (
-          <span className="text-red-800">Please entre an email address</span>
-        )}
-
-        <input
-          className=" h-10 bg-gray-300 rounded"
-          type="password"
-          placeholder="Enter your Password"
-          {...register("password", {
-            required: true,
-            maxLength: 20,
-            minLength: 6,
-            pattern: /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,25}/
-          })}
-          value={password}
-          onChange={(ev) => setPassword(ev.target.value)}
-        />
-        {errors.password?.type==='required' && (
-          <span className="text-red-800">This field is required</span>
-        )}
-        {errors.password?.type === "minLength" && (
-          <p className="text-red-800" role="alert">
-            Password must be 6 characters
-          </p>
-        )}
-        {errors.password?.type === "pattern" && (
-          <p className="text-red-800" role="alert">
-            at least one lowercase letter, one uppercase letter, one numeric digit, and one special character
-          </p>
-        )}
-
-        <p>
-          Already registered? Go to{" "}
-          <Link to={"/login"}>
-            <span className="text-red-400 cursor-pointer">LogIn</span>
-          </Link>
-        </p>
-        <button type="submit" className="bg-blue-700 h-10 rounded mt-6 ">
-          Log in
-        </button>
-        <button className="bg-red-400 h-10 rounded val  flex items-center justify-center gap-3 ">
-          {" "}
-          <FcGoogle className="text-xl" /> Google
-        </button>
-      </form>
+    <div className="hero min-h-screen bg-base-200">
+        <div className="hero-content flex-col lg:flex-row-reverse">
+            <div className="text-center lg:text-left">
+                <h1 className="text-5xl font-bold">Sign up now!</h1>
+                <p className="py-6">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
+            </div>
+            <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
+                <form onSubmit={handleSubmit(onSubmit)} className="card-body">
+                    <div className="form-control">
+                        <label className="label">
+                            <span className="label-text">Name</span>
+                        </label>
+                        <input type="text"  {...register("name", { required: true })} name="name" placeholder="Name" className="input input-bordered" />
+                        {errors.name && <span className="text-red-600">Name is required</span>}
+                    </div>
+                    <div className="form-control">
+                        <label className="label">
+                            <span className="label-text">Photo URL</span>
+                        </label>
+                        <input type="text"  {...register("photoURL", { required: true })} placeholder="Photo URL" className="input input-bordered" />
+                        {errors.photoURL && <span className="text-red-600">Photo URL is required</span>}
+                    </div>
+                    <div className="form-control">
+                        <label className="label">
+                            <span className="label-text">Email</span>
+                        </label>
+                        <input type="email"  {...register("email", { required: true })} name="email" placeholder="email" className="input input-bordered" />
+                        {errors.email && <span className="text-red-600">Email is required</span>}
+                    </div>
+                    <div className="form-control">
+                        <label className="label">
+                            <span className="label-text">Password</span>
+                        </label>
+                        <input type="password"  {...register("password", {
+                            required: true,
+                            minLength: 6,
+                            maxLength: 20,
+                            pattern: /(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9])(?=.*[a-z])/
+                        })} placeholder="password" className="input input-bordered" />
+                        {errors.password?.type === 'required' && <p className="text-red-600">Password is required</p>}
+                        {errors.password?.type === 'minLength' && <p className="text-red-600">Password must be 6 characters</p>}
+                        {errors.password?.type === 'maxLength' && <p className="text-red-600">Password must be less than 20 characters</p>}
+                        {errors.password?.type === 'pattern' && <p className="text-red-600">Password must have one Uppercase one lower case, one number and one special character.</p>}
+                        <label className="label">
+                            <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
+                        </label>
+                    </div>
+                    <div className="form-control mt-6">
+                        <input className="btn btn-primary" type="submit" value="Sign Up" />
+                    </div>
+                </form>
+                <p><small>Already have an account <Link to="/login">Login</Link></small></p>
+            </div>
+        </div>
     </div>
-    </>
+</>
   );
 };
 
