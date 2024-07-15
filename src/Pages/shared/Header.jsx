@@ -6,6 +6,7 @@ import { styled } from "@mui/material/styles";
 import IconButton from "@mui/material/IconButton";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import useAuth from "../../Hooks/useAuth";
+import useCard from "../../Hooks/useCard";
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
   "& .MuiBadge-badge": {
@@ -17,7 +18,10 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 }));
 
 const Header = () => {
-  const { user, logOut } = useAuth()
+  // card
+  const [card] = useCard();
+
+  const { user, logOut } = useAuth();
   const handleLogout = () => {
     logOut()
       .then(() => {})
@@ -95,11 +99,12 @@ const Header = () => {
           <ul className="menu menu-horizontal px-1">{navitem}</ul>
         </div>
         <div className="navbar-end">
-        <IconButton aria-label="cart">
-        <StyledBadge badgeContent={3} color="secondary">
-          <ShoppingCartIcon />
-        </StyledBadge>
-      </IconButton>
+          
+          <IconButton aria-label="cart">
+            <StyledBadge badgeContent={`${card.length}`} color="secondary">
+              <ShoppingCartIcon />
+            </StyledBadge>
+          </IconButton>
         </div>
       </div>
     </>

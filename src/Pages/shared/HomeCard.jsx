@@ -5,39 +5,36 @@ import useAxiosSecure from "../../Hooks/useAxiosSecure";
 
 const HomeCard = ({ item }) => {
   const { user } = useAuth();
-  const { image, name, recipe, price , _id} = item;
+  const { image, name, recipe, price, _id } = item;
   const axiosSecure = useAxiosSecure();
 
   const navigate = useNavigate();
   const location = useLocation();
-  const handleAdsToCard = (food) => {
+  const handleAdsToCard = () => {
     if (user && user.email) {
       // send data data base this name
-      const catdItem ={
-        menuId:_id,
-        email:user.email,
+      const catdItem = {
+        menuId: _id,
+        email: user.email,
         name,
         image,
-        price
-      }
+        price,
+      };
 
       // send data database
-      axiosSecure.post('/cards' , catdItem)
-      .then(res => {
-        console.log(res.data)
-        if(res.data.insertedId){
+      axiosSecure.post("/cards", catdItem).then((res) => {
+        console.log(res.data);
+        if (res.data.insertedId) {
           Swal.fire({
             position: "center",
             icon: "success",
             title: `${name} Add to your card `,
             showConfirmButton: false,
-            timer: 1500
+            timer: 1500,
           });
         }
-      })
-      
-
-    }else{
+      });
+    } else {
       Swal.fire({
         title: "You are not log in",
         text: "Please login to add to the card",
@@ -45,10 +42,10 @@ const HomeCard = ({ item }) => {
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
-        confirmButtonText: "Please, Login"
+        confirmButtonText: "Please, Login",
       }).then((result) => {
         if (result.isConfirmed) {
-          navigate('/login', {state : {from : location}})
+          navigate("/login", { state: { from: location } });
         }
       });
     }
