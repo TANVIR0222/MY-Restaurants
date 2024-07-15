@@ -1,8 +1,58 @@
+import Swal from "sweetalert2";
+import useAuth from "../../Hooks/useAuth";
+import { useLocation, useNavigate } from "react-router-dom";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
+
 const HomeCard = ({ item }) => {
-  const { image, name, recipe, price } = item;
-  const handleAdsToCard= (food) =>{
-    console.log(food);
-  }
+  const { user } = useAuth();
+  const { image, name, recipe, price , _id} = item;
+  const axiosSecure = useAxiosSecure();
+
+  const navigate = useNavigate();
+  const location = useLocation();
+  const handleAdsToCard = (food) => {
+    if (user && user.email) {
+      // send data data base this name
+      const catdItem ={
+        menuId:_id,
+        email:user.email,
+        name,
+        image,
+        price
+      }
+
+      // send data database
+      axiosSecure.post('/cards' , catdItem)
+      .then(res => {
+        console.log(res.data)
+        if(res.data.insertedId){
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: `${name} Add to your card `,
+            showConfirmButton: false,
+            timer: 1500
+          });
+        }
+      })
+      
+
+    }else{
+      Swal.fire({
+        title: "You are not log in",
+        text: "Please login to add to the card",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Please, Login"
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate('/login', {state : {from : location}})
+        }
+      });
+    }
+  };
   return (
     <div>
       <div className=" bg-white w-96 hover:bg-slate-100 shadow-md">
@@ -18,8 +68,9 @@ const HomeCard = ({ item }) => {
           <p>{recipe}</p>
           <div className="card-actions">
             <button
-            onClick={()=> handleAdsToCard(item) }
-             className=" border-yellow-600 uppercase text-yellow-600 btn btn-outline border-0 mt-8 cursor-pointer border-b-4">
+              onClick={() => handleAdsToCard(item)}
+              className=" border-yellow-600 uppercase text-yellow-600 btn btn-outline border-0 mt-8 cursor-pointer border-b-4"
+            >
               Add to cart
             </button>
           </div>
