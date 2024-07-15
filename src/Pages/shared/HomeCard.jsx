@@ -2,14 +2,21 @@ import Swal from "sweetalert2";
 import useAuth from "../../Hooks/useAuth";
 import { useLocation, useNavigate } from "react-router-dom";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
+import useCard from "../../Hooks/useCard";
 
 const HomeCard = ({ item }) => {
+
+  // refecth
+  const [,refetch] = useCard();
+
+  // user
   const { user } = useAuth();
   const { image, name, recipe, price, _id } = item;
   const axiosSecure = useAxiosSecure();
 
   const navigate = useNavigate();
   const location = useLocation();
+
   const handleAdsToCard = () => {
     if (user && user.email) {
       // send data data base this name
@@ -32,6 +39,8 @@ const HomeCard = ({ item }) => {
             showConfirmButton: false,
             timer: 1500,
           });
+          // refetch update cart auto
+          refetch();
         }
       });
     } else {
@@ -65,7 +74,7 @@ const HomeCard = ({ item }) => {
           <p>{recipe}</p>
           <div className="card-actions">
             <button
-              onClick={() => handleAdsToCard(item)}
+              onClick={handleAdsToCard}
               className=" border-yellow-600 uppercase text-yellow-600 btn btn-outline border-0 mt-8 cursor-pointer border-b-4"
             >
               Add to cart

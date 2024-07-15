@@ -11,6 +11,7 @@ import SingUp from "../auth/SingUp";
 import PrivetRoute from "./PrivetRoute";
 import Secret from "../Pages/shared/secret/Secret";
 import Login from "../auth/login/Login";
+import Dashboard from "../Layout/Dashboard";
 
   export const router = createBrowserRouter([
     {
@@ -45,7 +46,12 @@ import Login from "../auth/login/Login";
             path:'secret',
             element:<PrivetRoute><Secret></Secret></PrivetRoute>
         },
+        {
+          path:'dashboard',
+          element:<Dashboard></Dashboard>
+        }
 
       ]
     },
+    
   ]);
