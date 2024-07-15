@@ -42,7 +42,7 @@ const Header = () => {
         <Link to={"/contact"}>Contact</Link>
       </li>
       <li className=" uppercase">
-        <Link to={"/secret"}>Secret</Link>
+        <Link to={"/dashboard"}>Dashboard</Link>
       </li>
 
       {user ? (

@@ -5,13 +5,14 @@ import {
 import Home from "../Pages/Home/Home/Home";
 import Main from "../Layout/Main";
 import Menu from "../Pages/Menu/Menu";
-import Order from "../Pages/Order/order/Order";
 import Contact from "../Pages/Contact/Contact";
 import SingUp from "../auth/SingUp";
 import PrivetRoute from "./PrivetRoute";
 import Secret from "../Pages/shared/secret/Secret";
 import Login from "../auth/login/Login";
 import Dashboard from "../Layout/Dashboard";
+import Order from "../Pages/Order/order/Order";
+import Cart from "../Pages/Dashboard/Cart/Cart";
 
   export const router = createBrowserRouter([
     {
@@ -46,12 +47,17 @@ import Dashboard from "../Layout/Dashboard";
             path:'secret',
             element:<PrivetRoute><Secret></Secret></PrivetRoute>
         },
-        {
-          path:'dashboard',
-          element:<Dashboard></Dashboard>
-        }
 
       ]
     },
-    
+    {
+      path:'dashboard',
+      element:<Dashboard></Dashboard>,
+      children:[
+        {
+          path:'cart',
+          element:<Cart/>
+        }
+      ]
+    }
   ]);
