@@ -22,7 +22,7 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const { singIn } = useAuth();
+  const { singIn , googleSingin } = useAuth();
 
   useEffect(() => {
     loadCaptchaEnginge(6);
@@ -50,6 +50,15 @@ const Login = () => {
       navigate(from, { replace: true });
     });
   };
+
+  const handleGoogleLogin = () =>{
+    googleSingin()
+    .then(res => {
+      console.log(res.user);
+      navigate(from, { replace: true });
+
+    })
+  }
 
   return (
     <>
@@ -90,7 +99,7 @@ const Login = () => {
             <button type="submit" className="bg-blue-700 h-10 rounded mt-6 ">
               Log in
             </button>
-            <button className="bg-red-400 h-10 rounded val  flex items-center justify-center gap-3 ">
+            <button onClick={handleGoogleLogin} className="bg-red-400 h-10 rounded val  flex items-center justify-center gap-3 ">
               {" "}
               <FcGoogle className="text-xl" /> Google
             </button>
