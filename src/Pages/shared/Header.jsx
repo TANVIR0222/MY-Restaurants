@@ -1,42 +1,70 @@
-import { useContext } from "react";
 import { Link } from "react-router-dom";
-import { AuthContex } from "../../Providers/AuthProviders";
 import { Button } from "@mui/material";
 
-// 
+import Badge from "@mui/material/Badge";
+import { styled } from "@mui/material/styles";
+import IconButton from "@mui/material/IconButton";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import useAuth from "../../Hooks/useAuth";
+
+const StyledBadge = styled(Badge)(({ theme }) => ({
+  "& .MuiBadge-badge": {
+    right: -3,
+    top: 13,
+    border: `2px solid ${theme.palette.background.paper}`,
+    padding: "0 4px",
+  },
+}));
 
 const Header = () => {
-  const {user,logOut} = useContext(AuthContex)
-  const handleLogout = () =>{
+  const { user, logOut } = useAuth()
+  const handleLogout = () => {
     logOut()
-    .then(()=>{})
-    .catch(error => console.log(error))
-  }
-  const navitem = <>
-    <li className=" uppercase"><Link to={'/'} >Home</Link></li>
-    <li className=" uppercase"><Link to={'/menu'} >our menu</Link></li>
-    <li className=" uppercase"><Link to={'order/salad'} >our order</Link></li>
-    <li className=" uppercase"><Link to={'/contact'} >Contact</Link></li>
-    <li className=" uppercase"><Link to={'/secret'} >Secret</Link></li>
+      .then(() => {})
+      .catch((error) => console.log(error));
+  };
+  const navitem = (
+    <>
+      <li className=" uppercase">
+        <Link to={"/"}>Home</Link>
+      </li>
+      <li className=" uppercase">
+        <Link to={"/menu"}>our menu</Link>
+      </li>
+      <li className=" uppercase">
+        <Link to={"order/salad"}>our order</Link>
+      </li>
+      <li className=" uppercase">
+        <Link to={"/contact"}>Contact</Link>
+      </li>
+      <li className=" uppercase">
+        <Link to={"/secret"}>Secret</Link>
+      </li>
 
-  {
-    user ? <>
-    <Button onClick={handleLogout} variant="contained">Logout</Button>
-
-    </> : <>
-        <li className=" bg-blue-600 rounded justify-end uppercase"><Link to={'/login'} >Login</Link></li>
-
+      {user ? (
+        <>
+          <Button onClick={handleLogout} variant="contained">
+            {user?.displayName}
+          </Button>
+          <Button onClick={handleLogout} variant="red">
+            Logout
+          </Button>
+        </>
+      ) : (
+        <>
+          <li className=" bg-blue-600 rounded justify-end uppercase">
+            <Link to={"/login"}>Login</Link>
+          </li>
+        </>
+      )}
     </>
-  }
-
-  </>
+  );
   return (
     <>
-
-      <div className="navbar bg-opacity-30 bg-black max-w-screen-xl text-white fixed z-10 ">
+      <div className="navbar  bg-white max-w-screen-xl text-black  z-10 ">
         <div className="navbar-start">
           <div className="dropdown">
-          <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
+            <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-5 w-5"
@@ -56,24 +84,22 @@ const Header = () => {
               tabIndex={0}
               className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow-md"
             >
-            {
-              navitem
-            }
+              {navitem}
             </ul>
           </div>
           <a className="btn btn-ghost text-xl text-red-500 focus:bg-none">
-            <Link to={'/'}>MY Restaurant</Link>
+            <Link to={"/"}>MY Restaurant</Link>
           </a>
         </div>
         <div className="navbar-center hidden lg:flex">
-          <ul className="menu menu-horizontal px-1">
-            {
-              navitem
-            }
-          </ul>
+          <ul className="menu menu-horizontal px-1">{navitem}</ul>
         </div>
         <div className="navbar-end">
-          <a className="btn">Button</a>
+        <IconButton aria-label="cart">
+        <StyledBadge badgeContent={3} color="secondary">
+          <ShoppingCartIcon />
+        </StyledBadge>
+      </IconButton>
         </div>
       </div>
     </>

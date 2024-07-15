@@ -1,6 +1,7 @@
 import SectionTitel from "../../../components/SectionTitel";
 import featured from "../../../assets/home/featured.jpg";
 import './featured.css'
+
 const Featured = () => {
   return (
     <div className="feature-item pt-8 my-20 bg-fixed">
