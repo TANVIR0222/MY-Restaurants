@@ -99,7 +99,6 @@ const Header = () => {
           <ul className="menu menu-horizontal px-1">{navitem}</ul>
         </div>
         <div className="navbar-end">
-          
           <IconButton aria-label="cart">
             <StyledBadge badgeContent={`${card.length}`} color="secondary">
               <ShoppingCartIcon />

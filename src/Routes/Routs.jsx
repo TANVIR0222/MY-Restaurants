@@ -10,9 +10,9 @@ import SingUp from "../auth/SingUp";
 import PrivetRoute from "./PrivetRoute";
 import Secret from "../Pages/shared/secret/Secret";
 import Login from "../auth/login/Login";
-import Dashboard from "../Layout/Dashboard";
+// import Dashboard from "../Layout/Dashboard";
 import Order from "../Pages/Order/order/Order";
-import Cart from "../Pages/Dashboard/Cart/Cart";
+// import Cart from "../Pages/Dashboard/Cart/Cart";
 
   export const router = createBrowserRouter([
     {
@@ -50,14 +50,14 @@ import Cart from "../Pages/Dashboard/Cart/Cart";
 
       ]
     },
-    {
-      path:'dashboard',
-      element:<Dashboard></Dashboard>,
-      children:[
-        {
-          path:'cart',
-          element:<Cart/>
-        }
-      ]
-    }
+    // {
+    //   path:'dashboard',
+    //   element:<Dashboard></Dashboard>,
+    //   children:[
+    //     {
+    //       path:'cart',
+    //       element:<Cart/>
+    //     }
+    //   ]
+    // }
   ]);
